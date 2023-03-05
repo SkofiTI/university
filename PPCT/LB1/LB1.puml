@@ -1,0 +1,65 @@
+@startuml Laba1
+
+left to right direction
+
+actor :Руководитель: as UC1
+actor :Работник склада: as UC2
+actor :Кассир: as UC3
+actor :Продавец: as UC4
+
+
+package Магазин {
+    rectangle Администрация {
+        (Заказ товаров) as UC1.1
+        (Просмотр статистики) as UC1.2
+    }
+
+    rectangle Склад {
+        (Приём товаров) as UC2.1
+        (Учёт товаров) as UC2.2
+        (Формирование отчёта) as UC2.3
+    }
+    
+
+    rectangle Касса {
+        (Принять деньги) as UC3.1
+        (Выдача товара) as UC3.1.1
+        (Возврат товара) as UC3.2
+        (Выдать деньги) as UC3.2.1
+        (Сформировать чек) as UC3.3
+    }
+
+    (Формирование накладной) as UC4.1
+
+
+    UC1 -- UC1.1
+    UC1.1 ..> UC2.2 : include
+
+    UC1 -- UC1.2
+    UC1.2 ..> UC2.3 : extend
+
+
+    UC2 -- UC2.1
+    UC2 -- UC2.2
+    UC2 -- UC2.3
+    UC2.3 ..> UC2.2: extend
+
+
+    UC3 -- UC3.1
+    UC3.1 ..> UC3.3: include
+    UC3.1 ..> UC3.1.1: include
+    UC3.1.1 ..> UC2.2 : extend
+
+    UC3 -- UC3.2
+    UC3.2 ..> UC3.2.1: include
+
+    UC3 -- UC3.3
+    UC3.3 ..> UC2.3: extend
+
+
+    UC4 -- UC4.1
+    UC4.1 ..> UC3.3: include
+
+}
+
+@enduml
